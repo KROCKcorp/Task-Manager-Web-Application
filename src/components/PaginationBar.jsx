@@ -11,7 +11,7 @@ export default function PaginationBar({page, pageSize, total, onPageChange}) {
       <div className='flex items-center gap-2'>
         <button
           className={`px-3 py-2 text-sm rounded-lg border border-gray-200 ${
-            canPrev ? 'text-gray-900 hover:bg-gray-50' : 'text-gray-400 cursor-not-allowed'
+            canPrev ? 'text-indigo-600 bg-white cursor-pointer hover:bg-indigo-100' : 'text-gray-400 cursor-not-allowed'
           }`}
           disabled={!canPrev}
           onClick={() => canPrev && onPageChange(page - 1)}>
@@ -19,7 +19,7 @@ export default function PaginationBar({page, pageSize, total, onPageChange}) {
         </button>
         <button
           className={`px-3 py-2 text-sm rounded-lg border border-gray-200 ${
-            canNext ? 'text-gray-900 hover:bg-gray-50' : 'text-gray-400 cursor-not-allowed'
+            canNext ? 'text-indigo-600 bg-white cursor-pointer hover:bg-indigo-100' : 'text-gray-400 cursor-not-allowed'
           }`}
           disabled={!canNext}
           onClick={() => canNext && onPageChange(page + 1)}>

@@ -17,12 +17,12 @@ export default function Navbar() {
   const desktopItemClass = 'cursor-pointer p-3 hover:text-indigo-400 transition-all ease-in-out'
 
   return (
-    <nav className='text-indigo-200 flex justify-between items-center max-w-[1400px] mx-auto p-4'>
+    <nav className='text-indigo-400 flex justify-between items-center max-w-[1400px] mx-auto p-4'>
       <h1 className='text-3xl font-bold text-indigo-400'>Tasks Manager</h1>
       <ul className='hidden md:flex'>
         {links.map(({label, to}) => (
           <li key={label}>
-            <NavLink to={to} className={({isActive}) => `${desktopItemClass} ${isActive ? 'text-indigo-400' : ''}`}>
+            <NavLink to={to} className={({isActive}) => `${desktopItemClass} ${isActive ? 'text-indigo-800' : ''}`}>
               {label}
             </NavLink>
           </li>
