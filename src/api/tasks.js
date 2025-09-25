@@ -1,6 +1,6 @@
 import client from "./client";
 
-export async function getTasks({ limit = 20, offset = 0, categoryId, completed, priority } = {}) {
+export async function getTasks({ limit = 12, offset = 0, categoryId, completed, priority } = {}) {
   let query = `/tasks?order=created_at.desc&limit=${limit}&offset=${offset}`;
 
   if (categoryId) query += `&category_id=eq.${categoryId}`;
@@ -8,8 +8,18 @@ export async function getTasks({ limit = 20, offset = 0, categoryId, completed, 
   if (priority) query += `&priority=eq.${priority}`;
 
   try {
-    const response = await client.get(query);
-    return response.data;
+    const response = await client.get(query, {
+      headers: {
+        Prefer: 'return=representation,count=exact'
+      }
+    });
+    const contentRange = response.headers['content-range'];
+    let total = undefined;
+    if (contentRange && typeof contentRange === 'string') {
+      const parts = contentRange.split('/');
+      if (parts.length === 2) total = Number(parts[1]);
+    }
+    return { rows: response.data, total };
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch tasks');
   }
