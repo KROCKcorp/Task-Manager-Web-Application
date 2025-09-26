@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <nav className='text-indigo-400 flex justify-between items-center max-w-[1400px] mx-auto p-4'>
-      <h1 className='text-3xl font-bold text-indigo-400'>Tasks Manager</h1>
+      <h1 className='text-3xl font-bold text-indigo-800'>Tasks Manager</h1>
       <ul className='hidden md:flex'>
         {links.map(({label, to}) => (
           <li key={label}>
@@ -39,7 +39,7 @@ export default function Navbar() {
             ? 'z-100 fixed left-0 top-0 w-[60%] h-full bg-indigo-950 ease-in-out duration-300'
             : 'z-100 fixed left-[-100%] top-0 w-[60%] h-full ease-in-out duration-300'
         }>
-        <h1 className='w-full text-3xl font-bold text-indigo-400 mx-4 mt-7'>Tasks Manager</h1>
+        <h1 className='w-full text-2xl font-bold text-indigo-400 mx-4 mt-7'>Tasks Manager</h1>
         <ul className='uppercase p-4 text-indigo-300'>
           {links.map(({label, to}, index) => {
             const isLast = index === links.length - 1

@@ -19,7 +19,7 @@ export default function TaskListPage() {
 
   const {
     data: tasksResp,
-    isLoading: tasksLoading,
+    isPending: tasksLoading,
     isError: tasksError,
     refetch,
   } = useQuery({
@@ -62,9 +62,12 @@ export default function TaskListPage() {
         </Link>
       </div>
 
+      {/*Filters*/}
       <div className="my-10 grid grid-cols-1 sm:grid-cols-3 gap-10">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Category</label>
+          <label htmlFor="Category-selector" className="block text-sm font-medium text-gray-700">
+            Category
+          </label>
           <div className="mt-1">
             <select
               className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
@@ -73,6 +76,7 @@ export default function TaskListPage() {
                 setSelectedCategoryId(e.target.value)
                 setPage(1)
               }}
+              id="Category-selector"
             >
               {categoryOptions.map(c => (
                 <option key={c.id} value={c.id}>
@@ -84,7 +88,9 @@ export default function TaskListPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Priority</label>
+          <label htmlFor="Priority-selector" className="block text-sm font-medium text-gray-700">
+            Priority
+          </label>
           <div className="mt-1">
             <select
               className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
@@ -93,6 +99,7 @@ export default function TaskListPage() {
                 setPriorityFilter(e.target.value)
                 setPage(1)
               }}
+              id="Priority-selector"
             >
               <option value="all">All</option>
               <option value="low">Low</option>
@@ -103,7 +110,9 @@ export default function TaskListPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <label htmlFor="Status-selector" className="block text-sm font-medium text-gray-700">
+            Status
+          </label>
           <div className="mt-1">
             <select
               className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
@@ -112,6 +121,7 @@ export default function TaskListPage() {
                 setCompletedFilter(e.target.value)
                 setPage(1)
               }}
+              id="Status-selector"
             >
               <option value="all">All</option>
               <option value="completed">Completed</option>
@@ -146,16 +156,20 @@ export default function TaskListPage() {
 
       {!isLoading && !isError && Array.isArray(tasks) && tasks.length > 0 && (
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {tasks.map(task => (
-            <Link to={`/tasks/${task.id}`} className="text-sm text-indigo-600 hover:text-blue-700 font-medium">
-              <TaskCard
+          {tasks.map(task => {
+            const category = categories?.find(c => c.id === task.category_id)
+
+            return (
+              <Link
+                to={`/tasks/${task.id}`}
+                className="text-sm text-indigo-600 hover:text-blue-700 font-medium"
+                state={{task,category}}
                 key={task.id}
-                task={task}
-                categoryName={categories?.find?.(c => c.id === task.category_id)?.name}
-                color={categories?.find?.(c => c.id === task.category_id)?.color}
-              />
-            </Link>
-          ))}
+              >
+                <TaskCard task={task} categoryName={category?.name} color={category?.color} />
+              </Link>
+            )
+          })}
         </div>
       )}
 
