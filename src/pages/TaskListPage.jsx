@@ -4,9 +4,11 @@ import {Link, useOutletContext} from 'react-router-dom'
 import {getTasks} from '../api/tasks'
 import TaskCard from '../components/TaskCard'
 import PaginationBar from '../components/PaginationBar'
+import {FaPlus} from 'react-icons/fa'
+import toast from 'react-hot-toast'
 
 export default function TaskListPage() {
-  const {categories, categoriesLoading, categoriesError} = useOutletContext()
+  const {categories, categoriesLoading, isCategoriesError, categoriesError} = useOutletContext()
   const [selectedCategoryId, setSelectedCategoryId] = useState('all')
   const [completedFilter, setCompletedFilter] = useState('all')
   const [priorityFilter, setPriorityFilter] = useState('all')
@@ -20,8 +22,9 @@ export default function TaskListPage() {
   const {
     data: tasksResp,
     isPending: tasksLoading,
-    isError: tasksError,
+    isError: isTasksError,
     refetch,
+    error: tasksError,
   } = useQuery({
     queryKey: [
       'tasks',
@@ -46,19 +49,20 @@ export default function TaskListPage() {
   }, [categories])
 
   const isLoading = tasksLoading || categoriesLoading
-  const isError = tasksError || categoriesError
+  const isError = isTasksError || isCategoriesError
+  const allError = tasksError || categoriesError
   const tasks = tasksResp?.rows ?? []
   const total = tasksResp?.total ?? 0
+
+  isError && toast.error(allError.message || 'Something went wrong')
 
   return (
     <div className="px-4 py-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold text-indigo-400">All Tasks</h1>
-        <Link
-          to="/tasks/new"
-          className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 active:bg-indigo-800"
-        >
-          Add Task
+        <Link to="/tasks/new" className="primaryBtn flex items-center">
+          <FaPlus size={20} className="mr-2" />
+          New Task
         </Link>
       </div>
 
@@ -70,7 +74,7 @@ export default function TaskListPage() {
           </label>
           <div className="mt-1">
             <select
-              className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
+              className="w-full rounded-lg border border-gray-200 bg-indigo-100 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
               value={selectedCategoryId}
               onChange={e => {
                 setSelectedCategoryId(e.target.value)
@@ -93,7 +97,7 @@ export default function TaskListPage() {
           </label>
           <div className="mt-1">
             <select
-              className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
+              className="w-full rounded-lg border border-gray-200 bg-indigo-100 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
               value={priorityFilter}
               onChange={e => {
                 setPriorityFilter(e.target.value)
@@ -115,7 +119,7 @@ export default function TaskListPage() {
           </label>
           <div className="mt-1">
             <select
-              className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
+              className="w-full rounded-lg border border-gray-200 bg-indigo-100 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
               value={completedFilter}
               onChange={e => {
                 setCompletedFilter(e.target.value)
@@ -163,7 +167,7 @@ export default function TaskListPage() {
               <Link
                 to={`/tasks/${task.id}`}
                 className="text-sm text-indigo-600 hover:text-blue-700 font-medium"
-                state={{task,category}}
+                state={{task, category}}
                 key={task.id}
               >
                 <TaskCard task={task} categoryName={category?.name} color={category?.color} />

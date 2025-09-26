@@ -14,22 +14,27 @@ export default function Navbar() {
     {label: 'Create Task', to: '/tasks/new'},
   ]
 
-  const desktopItemClass = 'cursor-pointer p-3 hover:text-indigo-400 transition-all ease-in-out'
+  const desktopItemClass = 'cursor-pointer p-3 hover:text-indigo-800 transition-all ease-in-out'
 
   return (
-    <nav className='text-indigo-400 flex justify-between items-center max-w-[1400px] mx-auto p-4'>
-      <h1 className='text-3xl font-bold text-indigo-800'>Tasks Manager</h1>
-      <ul className='hidden md:flex'>
+    <nav className="text-indigo-400 flex justify-between items-center max-w-[1400px] mx-auto p-4">
+      <h1 className="text-3xl font-bold text-indigo-800">Tasks Manager</h1>
+      <ul className="hidden md:flex">
         {links.map(({label, to}) => (
           <li key={label}>
-            <NavLink to={to} className={({isActive}) => `${desktopItemClass} ${isActive ? 'text-indigo-800' : ''}`}>
+            <NavLink
+              to={to}
+              className={({isActive}) =>
+                `${desktopItemClass} ${isActive ? 'text-indigo-600 font-bold transition-all' : ''}`
+              }
+            >
               {label}
             </NavLink>
           </li>
         ))}
       </ul>
 
-      <div className='md:hidden' onClick={handleNav}>
+      <div className="md:hidden cursor-pointer text-indigo-800" onClick={handleNav}>
         {!nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
       </div>
 
@@ -38,9 +43,10 @@ export default function Navbar() {
           !nav
             ? 'z-100 fixed left-0 top-0 w-[60%] h-full bg-indigo-950 ease-in-out duration-300'
             : 'z-100 fixed left-[-100%] top-0 w-[60%] h-full ease-in-out duration-300'
-        }>
-        <h1 className='w-full text-2xl font-bold text-indigo-400 mx-4 mt-7'>Tasks Manager</h1>
-        <ul className='uppercase p-4 text-indigo-300'>
+        }
+      >
+        <h1 className="w-full text-2xl font-bold text-indigo-400 mx-4 mt-7">Tasks Manager</h1>
+        <ul className="uppercase p-4 text-indigo-300">
           {links.map(({label, to}, index) => {
             const isLast = index === links.length - 1
             return (
@@ -48,7 +54,8 @@ export default function Navbar() {
                 <NavLink
                   to={to}
                   className={({isActive}) => (isActive ? 'text-white' : '')}
-                  onClick={() => setNav(true)}>
+                  onClick={() => setNav(true)}
+                >
                   {label}
                 </NavLink>
               </li>

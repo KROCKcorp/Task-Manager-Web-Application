@@ -7,6 +7,7 @@ import {updateTask, deleteTask} from '../api/tasks'
 import {MdDelete} from 'react-icons/md'
 import {BiSolidEdit} from 'react-icons/bi'
 import {priorityColors} from '../constants/constants'
+import toast from 'react-hot-toast'
 
 export default function TaskDetailPage() {
   const {state} = useLocation()
@@ -23,9 +24,11 @@ export default function TaskDetailPage() {
     },
     onSuccess: async () => {
       await qc.invalidateQueries({queryKey: ['tasks']})
+      toast.success('Task status updated successfully')
     },
-    onError: () => {
+    onError: error => {
       setCompleted(prev => !prev)
+      toast.error(error.message || 'Failed to update task status. Please try again!')
     },
   })
 
@@ -35,70 +38,71 @@ export default function TaskDetailPage() {
     },
     onSuccess: async () => {
       await qc.invalidateQueries({queryKey: ['tasks']})
+      toast.success('Task deleted successfully')
       navigate('/')
     },
-    onError: () => {
-      alert('Failed to delete task. Please try again!')
+    onError: error => {
+      toast.error(error.message || 'Failed to delete task. Please try again!')
     },
   })
 
   return (
-    <div className='flex flex-col bg-white p-10 rounded-2xl w-full'>
-      <h1 className='text-2xl font-bold text-indigo-400'>{task?.title}</h1>
-      <div className='flex flex-col sm:flex-row sm:grid-cols-2 mt-10 gap-8'>
+    <div className="flex flex-col bg-white p-10 rounded-2xl w-full">
+      <h1 className="text-2xl font-bold text-indigo-400">{task?.title}</h1>
+      <div className="flex flex-col sm:flex-row sm:grid-cols-2 mt-10 gap-8">
         <div>
           <ImageWithFallback src={task.image_url} alt={task.title} />
         </div>
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <div>
-            <h2 className='text-indigo-400 font-semibold text-lg mb-2'>Description:</h2>
-            <p className='text-gray-500'>{task?.description}</p>
+            <h2 className="text-indigo-400 font-semibold text-lg mb-2">Description:</h2>
+            <p className="text-gray-500">{task?.description}</p>
           </div>
           <p className={`${priorityColors[task?.priority]} font-semibold mt-4 sm:mt-auto`}>{task?.priority} priority</p>
         </div>
       </div>
 
-      <div className='h-2 my-4 rounded-2xl' style={{backgroundColor: category?.color}}></div>
+      <div className="h-2 my-4 rounded-2xl" style={{backgroundColor: category?.color}}></div>
 
       <div>
-        <p className='text-indigo-400 font-semibold text-lg mb-2'>Task Details:</p>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4'>
-          <p className='text-gray-700 font-semibold'>
+        <p className="text-indigo-400 font-semibold text-lg mb-2">Task Details:</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+          <p className="text-gray-700 font-semibold">
             Category: <span style={{color: category?.color}}>{category?.name}</span>
           </p>
-          <p className='text-gray-700 font-semibold'>
-            Due Date: <span className='font-normal'>{task?.due_date}</span>
+          <p className="text-gray-700 font-semibold">
+            Due Date: <span className="font-normal">{task?.due_date}</span>
           </p>
-          <p className='text-gray-700 font-semibold'>
-            Creation Date: <span className='font-normal'>{task?.created_at?.split('T')[0] || 'unknown'}</span>{' '}
+          <p className="text-gray-700 font-semibold">
+            Creation Date: <span className="font-normal">{task?.created_at?.split('T')[0] || 'unknown'}</span>{' '}
           </p>
-          <p className='text-gray-700 font-semibold'>
-            Last Update: <span className='font-normal'>{task?.updated_at?.split('T')[0] || 'unknown'}</span>
+          <p className="text-gray-700 font-semibold">
+            Last Update: <span className="font-normal">{task?.updated_at?.split('T')[0] || 'unknown'}</span>
           </p>
         </div>
       </div>
 
-      <div className='flex backdropColor p-4 mt-10 rounded-xl items-center justify-between'>
+      <div className="flex backdropColor p-4 mt-10 rounded-xl items-center justify-between">
         <ToggleBtn
-          id='task-completed-toggle'
+          id="task-completed-toggle"
           checked={completed}
           onChange={checked => toggleCompleted(checked)}
           disabled={isPending}
-          labelChecked='Completed'
-          labelUnchecked='Pending'
+          labelChecked="Completed"
+          labelUnchecked="Pending"
         />
 
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <MdDelete
-            className='text-red-500 size-6 cursor-pointer'
+            className="text-red-500 size-6 cursor-pointer"
             onClick={() => removeTask(task?.id)}
             disabled={isDeleting}
           />
 
           <BiSolidEdit
-            className='text-indigo-500 size-6 cursor-pointer ml-4'
+            className="text-indigo-500 size-6 cursor-pointer ml-4"
             onClick={() => {
-              navigate(`/tasks/${task?.id}/edit`, {state: {task}})
+              navigate(`/tasks/${task?.id}/edit`)
             }}
           />
         </div>

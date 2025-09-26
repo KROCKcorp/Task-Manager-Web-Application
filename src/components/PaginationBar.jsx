@@ -4,17 +4,18 @@ export default function PaginationBar({page, pageSize, total, onPageChange}) {
   const canNext = page < totalPages
 
   return (
-    <div className='mt-6 flex items-center justify-between gap-3'>
-      <div className='text-sm text-gray-600'>
+    <div className="mt-6 flex items-center justify-between gap-3">
+      <div className="text-sm text-gray-600">
         Page {page} of {totalPages}
       </div>
-      <div className='flex items-center gap-2'>
+      <div className="flex items-center gap-2">
         <button
           className={`px-3 py-2 text-sm rounded-lg border border-gray-200 ${
             canPrev ? 'text-indigo-600 bg-white cursor-pointer hover:bg-indigo-100' : 'text-gray-400 cursor-not-allowed'
           }`}
           disabled={!canPrev}
-          onClick={() => canPrev && onPageChange(page - 1)}>
+          onClick={() => canPrev && onPageChange(page - 1)}
+        >
           Previous
         </button>
         <button
@@ -22,7 +23,8 @@ export default function PaginationBar({page, pageSize, total, onPageChange}) {
             canNext ? 'text-indigo-600 bg-white cursor-pointer hover:bg-indigo-100' : 'text-gray-400 cursor-not-allowed'
           }`}
           disabled={!canNext}
-          onClick={() => canNext && onPageChange(page + 1)}>
+          onClick={() => canNext && onPageChange(page + 1)}
+        >
           Next
         </button>
       </div>
