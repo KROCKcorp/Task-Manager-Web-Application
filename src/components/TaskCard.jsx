@@ -1,5 +1,6 @@
 import ImageWithFallback from './ImageWithFallback'
 import {priorityColors} from '../constants/constants'
+import {PiWarningOctagonFill} from 'react-icons/pi'
 
 export default function TaskCard({task, categoryName, color}) {
   return (
@@ -9,7 +10,6 @@ export default function TaskCard({task, categoryName, color}) {
         <ImageWithFallback src={task?.image_url} alt={task.title} />
       </div>
       <div className='flex-1 min-w-0 flex flex-col'>
-        {' '}
         <div className='flex items-start justify-between gap-2'>
           <h3 className='text-base font-semibold text-gray-700 truncate'>{task?.title}</h3>
           <span
@@ -24,9 +24,14 @@ export default function TaskCard({task, categoryName, color}) {
             {categoryName}
           </div>
         )}
-        {task.description && <p className='mt-2 text-sm font-normal text-gray-500 line-clamp-3'>{task?.description}</p>}
+        <p className='mt-2 text-sm font-normal text-gray-500 line-clamp-3'>
+          {task.description?.length === 0 || !task.description ? '- There is no description for this task!' : task.description}
+        </p>
         <div className='flex justify-end mt-auto'>
-          <p className={`text-sm font-medium ${priorityColors[task?.priority]}`}>{task?.priority} priority</p>
+          <p className={`flex flex-nowrap items-center text-sm font-medium ${priorityColors[task?.priority]}`}>
+            <PiWarningOctagonFill className='mr-2' size={20} />
+            {task?.priority} priority
+          </p>
         </div>
       </div>
     </div>
