@@ -22,33 +22,33 @@ A modern, full-featured task management application built with React and Vite. T
 
 ## Features Implemented
 
-### Core Functionality
+### Functionality
 
-- **Task Management**: Create, read, update, and delete tasks
-- **Task Details**: Comprehensive task view with image support, descriptions, and metadata
-- **Task Status**: Toggle between completed and pending states
-- **Priority System**: Low, medium, and high priority levels with color coding
-- **Category Management**: Organize tasks by custom categories
-- **Due Dates**: Set and track task deadlines
-- **Image Support**: Attach images to tasks with fallback handling
+- **Task Management**: Create, read, update, and delete tasks.
+- **Task Details**: Comprehensive task view with image support, descriptions, and metadata.
+- **Task Status**: Toggle between completed and pending states.
+- **Priority System**: Low, medium, and high priority levels with color coding.
+- **Category Management**: Organize tasks by custom categories.
+- **Due Dates**: Set and track task deadlines.
+- **Image Support**: Attach images to tasks with fallback handling.
 
 ### User Experience
 
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Real-time Updates**: Instant UI updates with optimistic mutations
-- **Loading States**: Skeleton loaders for better perceived performance
-- **Error Handling**: Comprehensive error handling with user-friendly messages
-- **Toast Notifications**: Success and error feedback using react-hot-toast
-- **Pagination**: Efficient task browsing with pagination controls
-- **Filtering**: Filter by category, status, and priority
+- **Responsive Design**: Mobile-first approach with Tailwind CSS.
+- **Real-time Updates**: Instant UI updates with optimistic mutations.
+- **Loading States**: Skeleton loaders for better perceived performance.
+- **Error Handling**: Comprehensive error handling with user-friendly messages.
+- **Toast Notifications**: Success and error feedback using react-hot-toast.
+- **Pagination**: Efficient task browsing with pagination controls.
+- **Filtering**: Filter by category, status, and priority.
 
 ### Technical Features
 
-- **Server State Management**: TanStack Query for efficient data fetching and caching
-- **Optimistic Updates**: Immediate UI feedback with rollback on errors
-- **Image Fallbacks**: Graceful handling of missing or broken images
-- **Form Validation**: Client-side validation with error messages
-- **Loading Skeletons**: Enhanced UX during data fetching
+- **Server State Management**: TanStack Query for efficient data fetching and caching.
+- **Optimistic Updates**: Immediate UI feedback with rollback on errors.
+- **Image Fallbacks**: Graceful handling of missing or broken images.
+- **Form Validation**: Client-side validation with error messages.
+- **Loading Skeletons**: Enhanced UX during data fetching.
 
 ## Setup and Run Instructions
 
@@ -110,41 +110,20 @@ A modern, full-featured task management application built with React and Vite. T
 
 ## State Management Approach
 
-### Server State Management
+- **TanStack Query**: Handles all server state, caching, and synchronization.
+- **Optimistic Updates**: Immediate UI feedback with automatic rollback on errors.
+- **React useState**: Component-level state for forms and UI interactions.
+- **React Router**: URL state management for navigation and filters and 
+- **Context API**: React Router's Outlet context for sending objects between routes..
 
-- **TanStack Query**: Handles all server state, caching, and synchronization
-- **Query Keys**: Organized by resource type (`['tasks']`, `['categories']`, `['task', id]`)
-- **Automatic Refetching**: Smart background updates and cache invalidation
-- **Optimistic Updates**: Immediate UI feedback with automatic rollback on errors
+## Technical Stack
 
-### Local State Management
-
-- **React useState**: Component-level state for forms and UI interactions
-- **React Router**: URL state management for navigation and filters
-- **Context API**: Shared state through React Router's Outlet context
-
-### State Flow Architecture
-
-```
-Server State (TanStack Query)
-    ↓
-Component State (useState)
-    ↓
-UI Updates (Optimistic)
-    ↓
-Server Sync (Mutations)
-    ↓
-Cache Invalidation
-```
-
-## 🔧 Technical Stack
-
-- **Frontend**: React 19, Vite, Tailwind CSS
-- **State Management**: TanStack Query, React Router
-- **HTTP Client**: Axios
-- **Notifications**: React Hot Toast
-- **Icons**: React Icons
-- **Skeletons**: React Loading Skeletons
-- **API**: Supabase
-- **Build Tool**: Vite
-- **Linting**: ESLint
+- **Frontend**: React 19, Vite, Tailwind CSS.
+- **State Management**: TanStack Query, React Router.
+- **HTTP Client**: Axios.
+- **Notifications**: React Hot Toast.
+- **Icons**: React Icons.
+- **Skeletons**: React Loading Skeletons.
+- **API**: Supabase.
+- **Build Tool**: Vite.
+- **Linting**: ESLint.
