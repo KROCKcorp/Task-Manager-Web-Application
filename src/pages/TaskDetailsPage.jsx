@@ -48,7 +48,7 @@ export default function TaskDetailPage() {
   })
 
   return (
-    <div className='flex flex-col bg-white p-10 rounded-2xl w-full'>
+    <div className='flex flex-col bg-white p-10 rounded-2xl w-full shadow-lg'>
       <h1 className='text-2xl font-bold text-indigo-400'>{task?.title}</h1>
       <div className='flex flex-col sm:flex-row sm:grid-cols-2 mt-10 gap-8'>
         <div>

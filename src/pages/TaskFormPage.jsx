@@ -5,6 +5,7 @@ import {createTask, updateTask, getTask} from '../api/tasks'
 import ToggleBtn from '../components/ToggleBtn'
 import toast from 'react-hot-toast'
 import {defaultFormData} from '../constants/constants'
+import TaskFormPageSkeleton from '../components/skeletons/TaskFormPageSkeleton'
 
 export default function TaskFormPage() {
   const navigate = useNavigate()
@@ -96,7 +97,6 @@ export default function TaskFormPage() {
       [name]: type === 'checkbox' ? checked : value,
     }))
 
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -141,25 +141,13 @@ export default function TaskFormPage() {
     mutation.mutate(taskData)
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="text-lg">Loading task...</div>
-      </div>
-    )
-  }
-
-  if (categoriesLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="text-lg">Loading categories...</div>
-      </div>
-    )
+  if (isLoading || categoriesLoading) {
+    return <TaskFormPageSkeleton />
   }
 
   return (
     <>
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg p-6 rounded-2xl">
         <h1 className="text-3xl font-bold mb-6 text-indigo-400">{isEditMode ? 'Edit Task' : 'Create New Task'}</h1>
 
         {errors.general && (
